@@ -25,7 +25,7 @@ cd ai-financial-advisor
 2. Create virtual or a conda environment (example using `uv`)
 
 ```shell
-uv init
+uv venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 ```
 
