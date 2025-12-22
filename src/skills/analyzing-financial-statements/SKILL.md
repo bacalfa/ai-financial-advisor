@@ -1,9 +1,6 @@
 ---
-name: analyzing_financial_statements
+name: analyzing-financial-statements
 description: Analyze company financial statements including income statements, balance sheets, and cash flow statements to assess financial health
-version: 1.0
-author: Bruno Abreu Calfa
-tags: [finance, fundamental-analysis, financial-statements]
 ---
 
 # Analyzing Financial Statements
@@ -22,16 +19,16 @@ Analyze income statements, balance sheets, and cash flow statements to evaluate:
 ## Key Financial Ratios to Calculate
 
 ### Profitability Ratios
-- **Gross Margin** = (Revenue - COGS) / Revenue
-- **Operating Margin** = Operating Income / Revenue
-- **Net Margin** = Net Income / Revenue
-- **Return on Equity (ROE)** = Net Income / Shareholders' Equity
+- **Gross Margin** = (Total Revenue - Cost of Revenue) / Total Revenue
+- **Operating Margin** = Operating Income / Total Revenue
+- **Net Margin** = Net Income / Total Revenue
+- **Return on Equity (ROE)** = Net Income / Stockholders Equity
 - **Return on Assets (ROA)** = Net Income / Total Assets
 
 ### Liquidity Ratios
 - **Current Ratio** = Current Assets / Current Liabilities
 - **Quick Ratio** = (Current Assets - Inventory) / Current Liabilities
-- **Cash Ratio** = Cash / Current Liabilities
+- **Cash Ratio** = Cash And Cash Equivalents / Current Liabilities
 
 ### Leverage Ratios
 - **Debt-to-Equity** = Total Debt / Total Equity
@@ -39,9 +36,9 @@ Analyze income statements, balance sheets, and cash flow statements to evaluate:
 - **Interest Coverage** = EBIT / Interest Expense
 
 ### Efficiency Ratios
-- **Asset Turnover** = Revenue / Total Assets
-- **Inventory Turnover** = COGS / Average Inventory
-- **Receivables Turnover** = Revenue / Average Accounts Receivable
+- **Asset Turnover** = Total Revenue / Total Assets
+- **Inventory Turnover** = Cost of Revenue / Average Inventory
+- **Receivables Turnover** = Total Revenue / Average Accounts Receivable
 
 ## Analysis Approach
 
@@ -53,7 +50,7 @@ Analyze income statements, balance sheets, and cash flow statements to evaluate:
 
 ## Expected Output Format
 
-Provide your analysis in JSON format:
+Your analysis and answer **MUST** consist **ONLY AND EXCLUSIVELY** of text in the following JSON format:
 ```json
 {
   "health_score": <float 0-1>,
@@ -88,7 +85,8 @@ Provide your analysis in JSON format:
     "Key risk factor affecting financials",
     "Another risk..."
   ],
-  "data_quality_notes": "Any notes about data completeness or reliability"
+  "data_quality_notes": "Any notes about data completeness or reliability",
+  "health_score_notes": "Rationale for health score assessment"
 }
 ```
 
@@ -101,6 +99,8 @@ Provide your analysis in JSON format:
 - **Be balanced**: Include both positive and negative observations
 - **Calculate accurately**: Ensure all ratios are computed correctly
 - **Explain significance**: Don't just report numbers, interpret them
+
+**IMPORTANT**: Give concise, but rigorous rationale for the health score assessment.
 
 ## Data Sources
 

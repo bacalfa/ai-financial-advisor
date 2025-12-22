@@ -6,12 +6,47 @@ The overall goal of this project is to develop an agentic AI framework that prov
 
 >  ⚠️ **Warning**: I am not a trained nor certified financial advisor, and the development of this tool is solely meant as a way for me to practice my skills in the area of agentic AI. Should you decide to use this tool, please remember that investing involves risks and its consequences are of the responsibility of the investor alone.
 
-This project leverages the Agent Skills features described in [Claude Skills Cookbook](https://github.com/anthropics/claude-cookbooks/tree/ef506bc3de0d76f154cafb4dbb0f6a259c896ba2/skills). The main contributions of this project are as follows:
+This project is inspired by and leverages the Agent Skills features described in [Claude Skills Cookbook](https://github.com/anthropics/claude-cookbooks/tree/ef506bc3de0d76f154cafb4dbb0f6a259c896ba2/skills). The main contributions of this project are as follows:
 
 1. Creation of agentic AI framework with an orchestrator agent (i.e., an AI financial advisor) and its assistant AI agents that perform specific financial analyses under the guidance of their "supervisor" (the orchestrator agent).
 2. Addition of a new agent skill for technical analysis of time-series financial data, leveraging [pandas_ta_classic](https://xgboosted.github.io/pandas-ta-classic/index.html#).
 
-Note: This README is still under construction.
+*Note: This README is still under construction.*
+
+## Financial Analyses
+
+### Financial Statements
+
+AI assistant analyzes income statements, balance sheets, and cash flow statements to assess financial health. Adapted from Anthropic's cookbook. Key evaluations:
+
+- Evaluates income statements, balance sheets, cash flows
+- Calculates key financial ratios
+- Agent Skills for retrieving financial data
+- Outputs health scores and trend analysis
+
+
+### Financial Models
+
+*🚧 To be implemented*
+
+AI assistant builds DCF models, performs comparable company analysis, and conducts sensitivity analysis. Adapted from Anthropic's cookbook. Key models:
+
+- DCF (Discounted Cash Flow) valuation
+- Comparable company analysis
+- Sensitivity analysis
+- Agent Skills for WACC calculation, FCF projections, terminal value
+
+
+### Technical Analysis
+
+*🚧 To be implemented*
+
+AI assistant performs technical analysis using pandas_ta_classic library for comprehensive indicator calculations and trading signal generation. **NEW: Original skill created for this project**. Key features:
+- Uses `pandas_ta_classic` for technical indicators
+- Analyzes trends, momentum, volume, volatility
+- Identifies support/resistance levels and chart patterns
+- Agent Skills for calculating indicators and detecting patterns
+- Outputs trading signals and entry/exit points
 
 ## Installation
 
@@ -35,7 +70,7 @@ source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 uv sync
 ```
 
-4. Create file `.venv.example` in folder `.venv` containing the following text
+4. Create file `.env` in top folder and containing the following text
 
 ```
 # Create this file in .env and add your actual API key
@@ -52,3 +87,48 @@ SKILLS_STORAGE_PATH=./src/agents/custom_skills
 # Optional: Output directory for generated files (default: ./outputs)
 OUTPUT_PATH=./outputs
 ```
+
+## Usage
+
+### Financial Statement Example
+
+Run script [examples/financial_statements_example.py](examples/financial_statements_example.py) to obtain the financial statement analysis by an AI agent for the company Apple (AAPL). The `response` result will look something like the following:
+
+![Example of financial statement output for AAPL](imgs/financial_statements_example.png)
+
+The core of the agent's response is available in field `data`, which in addition to a "health score" as assessed by the agent, also includes:
+
+- Key metrics
+
+![Example of financial statement output for AAPL: key metrics](imgs/financial_statements_example_key_metrics.png)
+
+- Trend analysis
+
+![Example of financial statement output for AAPL: trend analysis](imgs/financial_statements_example_trend_analysis.png)
+
+- Strengths
+
+![Example of financial statement output for AAPL: strengths](imgs/financial_statements_example_strengths.png)
+
+- Concerns
+
+![Example of financial statement output for AAPL: concerns](imgs/financial_statements_example_concerns.png)
+
+- Risks
+
+![Example of financial statement output for AAPL: risks](imgs/financial_statements_example_risks.png)
+
+- Data quality notes
+
+```python
+'Financial data is complete for the 3-year analysis period (2023-2025). Some estimated calculations used for interest coverage due to unavailable interest expense data.'
+```
+
+- Health score notes
+
+```python
+"Health score of 0.660 reflects Apple's strong profitability and operational efficiency, offset by liquidity concerns from negative working capital. The company's exceptional ROE of 151.9% and consistent cash generation support the overall positive assessment despite short-term liquidity metrics."
+```
+
+
+Note that this is only one independent financial analysis performed by an AI agent.

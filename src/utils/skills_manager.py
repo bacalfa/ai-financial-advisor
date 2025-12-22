@@ -7,11 +7,11 @@ via Anthropic's Skills Beta API with client.beta.messages.create().
 
 import logging
 import re
-import time
 from pathlib import Path
 from typing import Any
 
 import anthropic
+from anthropic.lib import files_from_dir
 
 logger = logging.getLogger(__name__)
 
@@ -32,7 +32,6 @@ class SkillsManager:
             anthropic_client: Anthropic client with Skills Beta enabled
         """
         self.client = anthropic_client
-        self.skills_registry: dict[str, dict[str, Any]] = {}
 
         logger.info("Initialized SkillsManager")
 
@@ -54,9 +53,16 @@ class SkillsManager:
             >>> manager = SkillsManager(client)
             >>> spec = manager.create_skill(
             ...     skill_id="technical_analysis",
-            ...     skill_directory="skills/technical_analysis",
+            ...     skill_directory="skills/technical-analysis",
             ... )
-            >>> # spec = {"type": "custom", "skill_id": "technical_analysis", "version": "1234567890"}
+            >>> # spec = {
+                "success": True,
+                "skill_id": skill.id,
+                "display_title": skill.display_title,
+                "latest_version": skill.latest_version,
+                "created_at": skill.created_at,
+                "source": skill.source,
+            }
         """
         skill_path = Path(skill_directory)
 
@@ -80,73 +86,92 @@ class SkillsManager:
         # Check for optional Python files
         python_files = list(skill_path.glob("*.py"))
 
-        # Use epoch timestamp as version (matches Anthropic's pattern)
-        version = str(int(time.time()))
+        try:
+            display_title = " ".join(skill_id.split("_")).title()
 
-        # Create skill specification
-        skill_spec = {"type": "custom", "skill_id": skill_id, "version": version}
+            # List skills and delete existing skill, if applicable
+            skills_list = self.list_skills()
+            for custom_skill in skills_list:
+                if display_title == custom_skill["display_title"]:
+                    self.delete_skill(custom_skill["skill_id"])
+                    break
 
-        # Register skill
-        self.skills_registry[skill_id] = {
-            "spec": skill_spec,
-            "directory": str(skill_directory),
-            "description": description,
-            "has_python_files": len(python_files) > 0,
-            "python_files": [f.name for f in python_files],
-        }
+            # Create skill using files_from_dir
+            skill = self.client.beta.skills.create(
+                display_title=display_title,
+                files=files_from_dir(skill_path),
+            )
 
-        logger.info(
-            f"Created skill '{skill_id}' version {version} "
-            f"({len(python_files)} Python files)"
-        )
+            logger.info(
+                f"Created skill '{skill_id}' version {skill.latest_version} "
+                f"({len(python_files)} Python files)"
+            )
 
-        return skill_spec
+            return {
+                "success": True,
+                "skill_id": skill.id,
+                "display_title": skill.display_title,
+                "latest_version": skill.latest_version,
+                "created_at": skill.created_at,
+                "source": skill.source,
+            }
+        except Exception as e:
+            logger.error(f"Create skill failed: {str(e)}", exc_info=True)
+            raise
 
-    def get_skill_spec(self, skill_id: str) -> dict[str, Any] | None:
-        """
-        Get skill specification for a registered skill.
-
-        Args:
-            skill_id: Skill identifier
-
-        Returns:
-            Skill specification dict or None if not found
-        """
-        if skill_id in self.skills_registry:
-            return self.skills_registry[skill_id]["spec"]
-        return None
-
-    def list_skills(self) -> dict[str, dict[str, Any]]:
+    def list_skills(self) -> list[dict[str, Any]]:
         """
         List all registered skills.
 
         Returns:
             Dictionary of skill_id -> skill info
         """
-        return self.skills_registry.copy()
+        try:
+            skills_response = self.client.beta.skills.list(source="custom")
 
-    def update_skill_version(
-        self, skill_id: str, skill_directory: str | None = None
-    ) -> dict[str, Any]:
+            skills = []
+            for skill in skills_response.data:
+                skills.append(
+                    {
+                        "skill_id": skill.id,
+                        "display_title": skill.display_title,
+                        "latest_version": skill.latest_version,
+                        "created_at": skill.created_at,
+                        "updated_at": skill.updated_at,
+                    }
+                )
+
+            return skills
+        except Exception as e:
+            print(f"Error listing skills: {e}")
+            return []
+
+    def delete_skill(self, skill_id: str) -> bool:
         """
-        Update a skill with a new version.
+        Delete a custom skill and all its versions.
 
         Args:
-            skill_id: Skill identifier
-            skill_directory: Optional new directory path
+            skill_id: ID of skill to delete
 
         Returns:
-            Updated skill specification
+            True if successful, False otherwise
         """
-        if skill_id not in self.skills_registry:
-            raise ValueError(f"Skill not found: {skill_id}")
+        try:
+            # First delete all versions
+            versions = self.client.beta.skills.versions.list(skill_id=skill_id)
 
-        # Get current directory or use provided one
-        current_dir = self.skills_registry[skill_id]["directory"]
-        directory = skill_directory if skill_directory else current_dir
+            for version in versions.data:
+                self.client.beta.skills.versions.delete(
+                    skill_id=skill_id, version=version.version
+                )
 
-        # Create new version
-        return self.create_skill(skill_id, directory)
+            # Then delete the skill itself
+            self.client.beta.skills.delete(skill_id)
+            return True
+
+        except Exception as e:
+            print(f"Error deleting skill: {e}")
+            return False
 
     def _extract_description_from_skill(self, skill_content: str) -> str:
         """
@@ -200,9 +225,9 @@ def setup_skills_from_directory(
         skills_base_path: Base path containing skill directories
         skill_definitions: Dict mapping skill_id to subdirectory name, e.g.:
             {
-                "analyzing_financial_statements": "financial_statements",
-                "financial_modeling_valuation": "financial_models",
-                "technical_analysis": "technical_analysis"
+                "analyzing-financial-statements": "financial_statements",
+                "financial-modeling-valuation": "financial_models",
+                "technical-analysis": "technical_analysis"
             }
 
     Returns:
@@ -214,14 +239,14 @@ def setup_skills_from_directory(
         ...     client,
         ...     "src/skills",
         ...     {
-        ...         "analyzing_financial_statements": "financial_statements",
-        ...         "financial_modeling_valuation": "financial_models",
-        ...         "technical_analysis": "technical_analysis",
+        ...         "financial_statements": "analyzing-financial-statements",
+        ...         "financial_models": "financial-modeling-valuation",
+        ...         "technical_analysis": "technical-analysis",
         ...     },
         ... )
         >>> # skill_specs = {
-        >>> #     "analyzing_financial_statements": {"type": "custom", ...},
-        >>> #     "financial_modeling_valuation": {"type": "custom", ...},
+        >>> #     "financial_statements": {"type": "custom", ...},
+        >>> #     "financial_models": {"type": "custom", ...},
         >>> #     "technical_analysis": {"type": "custom", ...}
         >>> # }
     """
@@ -235,11 +260,15 @@ def setup_skills_from_directory(
 
         try:
             spec = manager.create_skill(skill_id, str(skill_directory))
-            skill_specs[skill_id] = spec
+            skill_specs[skill_id] = {
+                "type": "custom",
+                "skill_id": spec["skill_id"],
+                "version": spec["latest_version"],
+            }
             logger.info(f"Successfully setup skill: {skill_id}")
         except Exception as e:
             logger.error(f"Failed to setup skill {skill_id}: {str(e)}")
-            raise
+            # raise
 
     return skill_specs
 
@@ -270,16 +299,16 @@ def get_agent_skill_specs_for_system(
         >>> advisor = create_financial_advisor_system(client, skill_specs)
     """
     skill_definitions = {
-        "analyzing_financial_statements": "financial_statements",
-        "financial_modeling_valuation": "financial_models",
-        "technical_analysis": "technical_analysis",
+        "financial_statements": "analyzing-financial-statements",
+        "financial_models": "financial-modeling-valuation",
+        "technical_analysis": "technical-analysis",
     }
 
     raw_specs = setup_skills_from_directory(client, skills_base_path, skill_definitions)
 
     # Map to agent names for convenience
     return {
-        "statements": raw_specs["analyzing_financial_statements"],
-        "models": raw_specs["financial_modeling_valuation"],
-        "technical": raw_specs["technical_analysis"],
+        "statements": raw_specs.get("financial_statements"),
+        "models": raw_specs.get("financial_models"),
+        "technical": raw_specs.get("technical_analysis"),
     }
