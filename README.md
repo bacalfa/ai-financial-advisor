@@ -27,15 +27,14 @@ AI assistant analyzes income statements, balance sheets, and cash flow statement
 
 ### Financial Models
 
-*🚧 To be implemented*
-
-AI assistant builds DCF models, performs comparable company analysis, and conducts sensitivity analysis. Adapted from Anthropic's cookbook. Key models:
+AI assistant builds DCF models, performs comparable company analysis, and conducts sensitivity analysis. Adapted from Anthropic's cookbook. Key calculations:
 
 - DCF (Discounted Cash Flow) valuation
 - Comparable company analysis
 - Sensitivity analysis
 - Agent Skills for WACC calculation, FCF projections, terminal value
 
+*Note: Automatically list comparable companies using a (free) Massive API key for stocks. See section [Installation](#installation).*
 
 ### Technical Analysis
 
@@ -86,6 +85,9 @@ SKILLS_STORAGE_PATH=./src/agents/custom_skills
 
 # Optional: Output directory for generated files (default: ./outputs)
 OUTPUT_PATH=./outputs
+
+# Massive API key from https://massive.com/ (optional)
+MASSIVE_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
 ## Usage
@@ -132,3 +134,14 @@ The core of the agent's response is available in field `data`, which in addition
 
 
 Note that this is only one independent financial analysis performed by an AI agent.
+
+
+### Financial Modeling Example
+
+Run script [examples/financial_models_example.py](examples/financial_models_example.py) to obtain the financial statement analysis by an AI agent for the company Apple (AAPL). The `response` result will look something like the following:
+
+![Example of financial modeling output for AAPL](imgs/financial_models_example.png)
+
+The core of the agent's response is available in field `data` which contains calculation and analysis results:
+
+![Example of financial modeling output for AAPL: data](imgs/financial_models_example_data.png)
