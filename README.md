@@ -121,13 +121,13 @@ The core of the agent's response is available in field `data`, which in addition
 - Data quality notes
 
 ```python
-'Financial data is complete for the 3-year analysis period (2023-2025). Some estimated calculations used for interest coverage due to unavailable interest expense data.'
+'Financial data is complete for 2022-2025 period. Interest expense data missing for 2024-2025, using 2023 data for coverage ratio. High quality data from reliable sources.'
 ```
 
 - Health score notes
 
 ```python
-"Health score of 0.660 reflects Apple's strong profitability and operational efficiency, offset by liquidity concerns from negative working capital. The company's exceptional ROE of 151.9% and consistent cash generation support the overall positive assessment despite short-term liquidity metrics."
+"Score of 0.76 reflects Apple's exceptional profitability (net margin 26.9%), solid growth trajectory, but considers liquidity constraints from negative working capital structure and moderate leverage levels. Strong cash generation and market position support overall health."
 ```
 
 

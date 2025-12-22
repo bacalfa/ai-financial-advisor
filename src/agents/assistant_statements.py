@@ -134,6 +134,7 @@ class FinancialAssistantStatements(BaseAgent):
                 "Total Revenue",
                 "Cost Of Revenue",
                 "Operating Income",
+                "Interest Expense",
             ]
         ]
         balance_sheet = balance_sheet.loc[

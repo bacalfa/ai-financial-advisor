@@ -23,7 +23,7 @@ async def main():
     skills_base_path = Path.cwd() / "src" / "skills"
     skill_specs = get_agent_skill_specs_for_system(client, skills_base_path)
     agent = FinancialAssistantStatements(client, skill_specs["statements"])
-    response = await agent.analyze(
+    response = await agent.execute(
         AgentTask(
             task_id="analyzing-financial-statements",
             ticker="AAPL",
