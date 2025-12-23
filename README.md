@@ -13,7 +13,9 @@ This project is inspired by and leverages the Agent Skills features described in
 
 *Note: This README is still under construction.*
 
-## Financial Analyses
+## Financial Assistants
+
+Three types of agents acting as financial assistants to an experienced financial advisor are implemented. Each type performs one of the following financial analyses.
 
 ### Financial Statements
 
@@ -24,21 +26,23 @@ AI assistant analyzes income statements, balance sheets, and cash flow statement
 - Agent Skills for retrieving financial data
 - Outputs health scores and trend analysis
 
+For more details on the sill description, see [src/skills/analyzing-financial-statements/SKILL.md](src/skills/analyzing-financial-statements/SKILL.md).
+
 
 ### Financial Models
 
 AI assistant builds DCF models, performs comparable company analysis, and conducts sensitivity analysis. Adapted from Anthropic's cookbook. Key calculations:
 
-- DCF (Discounted Cash Flow) valuation
+- Discounted Cash Flow (DCF) valuation
 - Comparable company analysis
 - Sensitivity analysis
-- Agent Skills for WACC calculation, FCF projections, terminal value
+- Agent Skills for Weighted Average Cost of Capital (WACC) calculation, Free Cash Flow (FCF) projections, terminal value
 
-*Note: Automatically list comparable companies using a (free) Massive API key for stocks. See section [Installation](#installation).*
+For more details on the sill description, see [src/skills/financial-modeling-valuation/SKILL.md](src/skills/financial-modeling-valuation/SKILL.md).
+
+*Note: Automatically list comparable companies using a (free) [Massive](https://massive.com/) API key for stocks. See section [Installation](#installation).*
 
 ### Technical Analysis
-
-*🚧 To be implemented*
 
 AI assistant performs technical analysis using pandas_ta_classic library for comprehensive indicator calculations and trading signal generation. **NEW: Original skill created for this project**. Key features:
 - Uses `pandas_ta_classic` for technical indicators
@@ -46,6 +50,21 @@ AI assistant performs technical analysis using pandas_ta_classic library for com
 - Identifies support/resistance levels and chart patterns
 - Agent Skills for calculating indicators and detecting patterns
 - Outputs trading signals and entry/exit points
+
+For more details on the sill description, see [src/skills/technical-analysis/SKILL.md](src/skills/technical-analysis/SKILL.md).
+
+
+## Financial Advisor (Orchestrator)
+
+*🚧 To be implemented*
+
+Class `FinancialAdvisor` represents a senior financial advisor that acts as an orchestrator agent. The main features of this agent include:
+- Coordinates all assistant agents (parallel or sequential)
+- Implements judgment layer with configurable weights
+- Feedback loops for improving low-confidence results
+- Class `InvestmentRecommendation`: Comprehensive recommendation dataclass
+- Synthesis logic combining fundamental, technical, and consistency scores
+
 
 ## Installation
 
@@ -138,10 +157,27 @@ Note that this is only one independent financial analysis performed by an AI age
 
 ### Financial Modeling Example
 
-Run script [examples/financial_models_example.py](examples/financial_models_example.py) to obtain the financial statement analysis by an AI agent for the company Apple (AAPL). The `response` result will look something like the following:
+Run script [examples/financial_models_example.py](examples/financial_models_example.py) to obtain the financial modeling analysis by an AI agent for the company Apple (AAPL). The `response` result will look something like the following:
 
 ![Example of financial modeling output for AAPL](imgs/financial_models_example.png)
 
 The core of the agent's response is available in field `data` which contains calculation and analysis results:
 
 ![Example of financial modeling output for AAPL: data](imgs/financial_models_example_data.png)
+
+
+### Technical Analysis Example
+
+Run script [examples/financial_ta_example.py](examples/financial_ta_example.py) to obtain the financial technical analysis by an AI agent for the company Apple (AAPL). The `response` result will look something like the following:
+
+![Example of financial technical analysis output for AAPL](imgs/financial_ta_example.png)
+
+The core of the agent's response is available in field `data` which contains calculation and analysis results:
+
+![Example of financial technical analysis output for AAPL: data](imgs/financial_ta_example_data.png)
+
+The agent also summarizes its rationale for the "technical score":
+
+```python
+'Score of 0.70 reflects mixed technical picture: bullish trend structure (SMA alignment) and volume (OBV) offset by weak momentum indicators (oversold stochastic, negative MACD histogram). Moderate risk tolerance suggests cautious approach given conflicting signals.'
+```

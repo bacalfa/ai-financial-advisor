@@ -1,20 +1,19 @@
 import asyncio
+import os
+from pathlib import Path
+
+from dotenv import load_dotenv
 
 from src.agents.assistant_models import FinancialAssistantModels
 from src.agents.base_agent import AgentTask
+from src.utils.skills_manager import (
+    SkillsManager,
+    get_agent_skill_specs_for_system,
+)
 
 
 async def main():
     """Main function to test the FinancialAssistantModels agent."""
-    import os
-    from pathlib import Path
-
-    from dotenv import load_dotenv
-
-    from src.utils.skills_manager import (
-        SkillsManager,
-        get_agent_skill_specs_for_system,
-    )
 
     load_dotenv(Path.cwd() / ".env")
     client = SkillsManager.create_client_with_skills_beta(
