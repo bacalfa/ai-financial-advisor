@@ -14,6 +14,8 @@ from datetime import datetime
 from enum import Enum
 from typing import Any
 
+import anthropic
+
 logger = logging.getLogger(__name__)
 
 
@@ -77,7 +79,7 @@ class BaseAgent(ABC):
         self,
         name: str,
         description: str,
-        anthropic_client: Any,
+        anthropic_client: anthropic.Anthropic,
         config: dict[str, Any] | None = None,
     ):
         """

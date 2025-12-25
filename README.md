@@ -11,7 +11,6 @@ This project is inspired by and leverages the Agent Skills features described in
 1. Creation of agentic AI framework with an orchestrator agent (i.e., an AI financial advisor) and its assistant AI agents that perform specific financial analyses under the guidance of their "supervisor" (the orchestrator agent).
 2. Addition of a new agent skill for technical analysis of time-series financial data, leveraging [pandas_ta_classic](https://xgboosted.github.io/pandas-ta-classic/index.html#).
 
-*Note: This README is still under construction.*
 
 ## Financial Assistants
 
@@ -29,11 +28,11 @@ AI assistant analyzes income statements, balance sheets, and cash flow statement
 For more details on the sill description, see [src/skills/analyzing-financial-statements/SKILL.md](src/skills/analyzing-financial-statements/SKILL.md).
 
 
-### Financial Models
+### Financial Modeling
 
-AI assistant builds DCF models, performs comparable company analysis, and conducts sensitivity analysis. Adapted from Anthropic's cookbook. Key calculations:
+AI assistant builds Discounted Cash Flow (DCF) models, performs comparable company analysis, and conducts sensitivity analysis. Adapted from Anthropic's cookbook. Key calculations:
 
-- Discounted Cash Flow (DCF) valuation
+- DCF valuation
 - Comparable company analysis
 - Sensitivity analysis
 - Agent Skills for Weighted Average Cost of Capital (WACC) calculation, Free Cash Flow (FCF) projections, terminal value
@@ -56,14 +55,26 @@ For more details on the sill description, see [src/skills/technical-analysis/SKI
 
 ## Financial Advisor (Orchestrator)
 
-*🚧 To be implemented*
-
 Class `FinancialAdvisor` represents a senior financial advisor that acts as an orchestrator agent. The main features of this agent include:
 - Coordinates all assistant agents (parallel or sequential)
 - Implements judgment layer with configurable weights
 - Feedback loops for improving low-confidence results
 - Class `InvestmentRecommendation`: Comprehensive recommendation dataclass
 - Synthesis logic combining fundamental, technical, and consistency scores
+
+The figure below shows the complete flow from user query through orchestrator, specialized agents with skills, judgment layer, and report generation. Note the feedback loop that allows the orchestrator to request additional analysis if needed.
+
+![Financial advisor architecture diagram](imgs/financial_advisor_architecture.png)
+
+
+## Financial Report Generation
+
+*🚧 To be implemented*
+
+The sophisticated multi-agent AI system culminates in a professional financial PDF report generation including the following features:
+- Complete sections: Cover, Executive Summary, Financial Analysis, Valuation, Technical Analysis, Risk Assessment, Conclusion, Disclaimer
+- Professional tables with color-coded recommendations
+- Proper formatting and layout
 
 
 ## Installation
@@ -181,3 +192,14 @@ The agent also summarizes its rationale for the "technical score":
 ```python
 'Score of 0.70 reflects mixed technical picture: bullish trend structure (SMA alignment) and volume (OBV) offset by weak momentum indicators (oversold stochastic, negative MACD histogram). Moderate risk tolerance suggests cautious approach given conflicting signals.'
 ```
+
+
+### Financial Advisor Example
+
+Run script [examples/financial_advisor_example.py](examples/financial_advisor_example.py) to obtain an investment recommendation of the company Apple (AAPL) by an AI financial advisor agent and its financial assistant agents. The `response` result will look something like the following:
+
+![Example of financial advisor analysis output for AAPL](imgs/financial_advisor_example.png)
+
+The core of the agent's response is available in field `data` which contains calculation and analysis results:
+
+![Example of financial advisor analysis output for AAPL: data](imgs/financial_advisor_example_data.png)
