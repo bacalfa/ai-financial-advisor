@@ -8,6 +8,7 @@ that leverage Anthropic's Agent Skills framework.
 import json
 import logging
 import re
+import time
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -204,6 +205,8 @@ class BaseAgent(ABC):
                         f"retry {task.retry_count + 1}/{task.max_retries}"
                     )
                     task.retry_count += 1
+                    if self.config.get("sequential_sleep"):
+                        time.sleep(self.config.get("sequential_sleep"))
                     return await self.execute(task)
                 else:
                     logger.error(f"{self.name} failed after {task.max_retries} retries")

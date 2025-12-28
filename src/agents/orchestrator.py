@@ -241,9 +241,9 @@ class FinancialAdvisor(BaseAgent):
                         task, AgentStatus.FAILED, str(e)
                     )
 
-                time.sleep(
-                    60
-                )  # Uncomment if a rate limit error occurs depending on payment tier
+                if self.config.get("sequential_sleep"):
+                    # Set this parameter if a rate limit error occurs depending on payment tier
+                    time.sleep(self.config.get("sequential_sleep"))
 
             return agent_results
 

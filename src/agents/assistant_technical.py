@@ -472,8 +472,10 @@ comprehensive analysis in JSON format as specified in your skill."""
 
             # analysis = json.loads(content)
 
-            analysis = FinancialAssistantTA.extract_json_from_markdown(content)
-            analysis = analysis[0]  # Expect single JSON block
+            # analysis = FinancialAssistantTA.extract_json_from_markdown(content)
+            # analysis = analysis[0]  # Expect single JSON block
+
+            analysis = json.loads(content)
 
             # Validate required fields from skill
             required_fields = ["technical_score", "signals", "indicators"]

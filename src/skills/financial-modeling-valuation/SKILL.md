@@ -15,47 +15,10 @@ Create rigorous financial models to determine the fair value of a company and as
 - **Scenario Analysis**: Evaluate bull, base, and bear case valuations
 - **Sensitivity Analysis**: Understand how key assumptions impact valuation
 
-## DCF Model Components
+## Script with Calculations for DCF Model Components
 
-### 1. Free Cash Flow Projection (5-10 years)
-Project future free cash flows based on:
-- **Revenue Growth**: Historical trends, market size, competitive position
-- **Operating Margins**: EBITDA and EBIT margins
-- **Capital Expenditures**: Maintenance vs. growth capex
-- **Working Capital**: Changes in working capital requirements
-- **Taxes**: Effective tax rate
-
-**Free Cash Flow Formula**:
-FCF = EBIT × (1 - Tax Rate) + D&A - Capex - Change in NWC
-
-### 2. Discount Rate (WACC)
-Calculate Weighted Average Cost of Capital:
-
-**Cost of Equity (CAPM)**:
-Cost of Equity = Risk-Free Rate + Beta × Market Risk Premium
-
-**WACC Formula**:
-WACC = (E/V) × Cost of Equity + (D/V) × Cost of Debt × (1 - Tax Rate)
-
-Where:
-- E/V = Equity as % of total value
-- D/V = Debt as % of total value
-- Risk-Free Rate: 10-year Treasury yield (typically 3-5%)
-- Market Risk Premium: Historical average (typically 6-8%)
-- Beta: Stock's systematic risk (from financial data providers)
-
-### 3. Terminal Value
-Calculate perpetuity value beyond projection period:
-
-**Perpetuity Growth Method**:
-Terminal Value = FCF_final × (1 + g) / (WACC - g)
-
-Where g = terminal growth rate (typically 2-3%, not exceeding GDP growth)
-
-### 4. Enterprise and Equity Value
-Enterprise Value = PV(Projected FCFs) + PV(Terminal Value)
-Equity Value = Enterprise Value - Net Debt + Non-Operating Assets
-Fair Value Per Share = Equity Value / Shares Outstanding
+- `dcf_model.py`: Complete DCF valuation engine
+- `sensitivity_analysis.py`: Sensitivity testing framework
 
 ## Relative Valuation
 
@@ -77,9 +40,17 @@ Compare key multiples to peer companies:
 4. Apply multiples to target company's metrics
 5. Derive implied valuation range
 
-## Expected Output Format
+## CRITICAL OUTPUT REQUIREMENT
 
-Your analysis and answer **MUST** consist **ONLY AND EXCLUSIVELY** of text in the following JSON format:
+**YOU MUST RESPOND WITH ONLY THE JSON OBJECT BELOW. NO OTHER TEXT, NO PREAMBLE, NO EXPLANATION, NO MARKDOWN CODE BLOCKS.**
+
+**DO NOT include any text before or after the JSON.**
+**DO NOT add any commentary or explanation.**
+**ONLY output the raw JSON object starting with { and ending with }.**
+
+## Required JSON Output Format
+
+Your analysis and answer **MUST** consist **ONLY AND EXCLUSIVELY** of text in the following JSON format where **ALL** fields must be present:
 ```json
 {
   "valuation": {

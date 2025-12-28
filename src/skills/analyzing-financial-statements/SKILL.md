@@ -16,29 +16,10 @@ Analyze income statements, balance sheets, and cash flow statements to evaluate:
 - **Efficiency**: Asset turnover, inventory management, receivables
 - **Growth**: Historical trends and sustainability of growth rates
 
-## Key Financial Ratios to Calculate
+## Scripts with Calculations for Key Financial Ratios and Interpretation
 
-### Profitability Ratios
-- **Gross Margin** = (Total Revenue - Cost of Revenue) / Total Revenue
-- **Operating Margin** = Operating Income / Total Revenue
-- **Net Margin** = Net Income / Total Revenue
-- **Return on Equity (ROE)** = Net Income / Stockholders Equity
-- **Return on Assets (ROA)** = Net Income / Total Assets
-
-### Liquidity Ratios
-- **Current Ratio** = Current Assets / Current Liabilities
-- **Quick Ratio** = (Current Assets - Inventory) / Current Liabilities
-- **Cash Ratio** = Cash And Cash Equivalents / Current Liabilities
-
-### Leverage Ratios
-- **Debt-to-Equity** = Total Debt / Total Equity
-- **Debt-to-Assets** = Total Debt / Total Assets
-- **Interest Coverage** = EBIT / Interest Expense
-
-### Efficiency Ratios
-- **Asset Turnover** = Total Revenue / Total Assets
-- **Inventory Turnover** = Cost of Revenue / Average Inventory
-- **Receivables Turnover** = Total Revenue / Average Accounts Receivable
+- `calculate_ratios.py`: Main calculation engine for all financial ratios
+- `interpret_ratios.py`: Provides interpretation and benchmarking
 
 ## Analysis Approach
 
@@ -48,9 +29,17 @@ Analyze income statements, balance sheets, and cash flow statements to evaluate:
 4. **Quality Assessment**: Evaluate earnings quality and cash flow generation
 5. **Red Flags**: Identify concerning trends or anomalies
 
-## Expected Output Format
+## CRITICAL OUTPUT REQUIREMENT
 
-Your analysis and answer **MUST** consist **ONLY AND EXCLUSIVELY** of text in the following JSON format:
+**YOU MUST RESPOND WITH ONLY THE JSON OBJECT BELOW. NO OTHER TEXT, NO PREAMBLE, NO EXPLANATION, NO MARKDOWN CODE BLOCKS.**
+
+**DO NOT include any text before or after the JSON.**
+**DO NOT add any commentary or explanation.**
+**ONLY output the raw JSON object starting with { and ending with }.**
+
+## Required JSON Output Format
+
+Your analysis and answer **MUST** consist **ONLY AND EXCLUSIVELY** of text in the following JSON format where **ALL** fields must be present:
 ```json
 {
   "health_score": <float 0-1>,

@@ -32,7 +32,7 @@ async def main():
         "models": agent_models,
         "technical": agent_ta,
     }
-    config = {"parallel_execution": False}
+    config = {"parallel_execution": False, "sequential_sleep": 90}
     agent = FinancialAdvisor(client, assistant_agents, config=config)
     response = await agent.analyze(
         AgentTask(

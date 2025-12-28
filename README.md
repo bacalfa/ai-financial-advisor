@@ -69,10 +69,16 @@ The figure below shows the complete flow from user query through orchestrator, s
 
 ## Financial Report Generation
 
-*🚧 To be implemented*
-
 The sophisticated multi-agent AI system culminates in a professional financial PDF report generation including the following features:
-- Complete sections: Cover, Executive Summary, Financial Analysis, Valuation, Technical Analysis, Risk Assessment, Conclusion, Disclaimer
+- Complete sections
+    - Cover
+    - Executive Summary
+    - Financial Health Analysis
+    - Valuation Analysis
+    - Technical Analysis
+    - Risk Assessment
+    - Conclusion & Recommendation
+    - Disclaimer
 - Professional tables with color-coded recommendations
 - Proper formatting and layout
 
@@ -203,3 +209,10 @@ Run script [examples/financial_advisor_example.py](examples/financial_advisor_ex
 The core of the agent's response is available in field `data` which contains calculation and analysis results:
 
 ![Example of financial advisor analysis output for AAPL: data](imgs/financial_advisor_example_data.png)
+
+
+### Complete Example
+
+Run script [examples/complete_example.py](examples/complete_example.py) to generate a PDF report with an investment recommendation of the company Apple (AAPL) by an AI financial advisor agent and its financial assistant agents. The report can be downloaded from [reports/investment_report_AAPL_20251228_101309.pdf](reports/investment_report_AAPL_20251228_101309.pdf).
+
+<iframe src="reports/investment_report_AAPL_20251228_101309.pdf" width="100%" height="500px" frameborder="0" />

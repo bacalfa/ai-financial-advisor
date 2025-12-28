@@ -273,8 +273,10 @@ as specified in your skill."""
 
             # analysis = json.loads(content)
 
-            analysis = FinancialAssistantModels.extract_json_from_markdown(content)
-            analysis = analysis[0]  # Expect single JSON block
+            # analysis = FinancialAssistantModels.extract_json_from_markdown(content)
+            # analysis = analysis[0]  # Expect single JSON block
+
+            analysis = json.loads(content)
 
             # Validate required fields from skill
             required_fields = ["valuation", "dcf_model", "assumptions"]

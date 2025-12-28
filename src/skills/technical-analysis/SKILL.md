@@ -131,9 +131,17 @@ Perform comprehensive technical analysis to:
 - **Engulfing**: Strong reversal signal
 - **Morning/Evening Star**: Three-candle reversal patterns
 
-## Expected Output Format
+## CRITICAL OUTPUT REQUIREMENT
 
-Your analysis and answer **MUST** consist **ONLY AND EXCLUSIVELY** of text in the following JSON format:
+**YOU MUST RESPOND WITH ONLY THE JSON OBJECT BELOW. NO OTHER TEXT, NO PREAMBLE, NO EXPLANATION, NO MARKDOWN CODE BLOCKS.**
+
+**DO NOT include any text before or after the JSON.**
+**DO NOT add any commentary or explanation.**
+**ONLY output the raw JSON object starting with { and ending with }.**
+
+## Required JSON Output Format
+
+Your analysis and answer **MUST** consist **ONLY AND EXCLUSIVELY** of text in the following JSON format where **ALL** fields must be present:
 ```json
 {
   "technical_score": <float 0-1>,
