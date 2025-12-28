@@ -10,6 +10,7 @@ This project is inspired by and leverages the Agent Skills features described in
 
 1. Creation of agentic AI framework with an orchestrator agent (i.e., an AI financial advisor) and its assistant AI agents that perform specific financial analyses under the guidance of their "supervisor" (the orchestrator agent).
 2. Addition of a new agent skill for technical analysis of time-series financial data, leveraging [pandas_ta_classic](https://xgboosted.github.io/pandas-ta-classic/index.html#).
+3. Generation of a PDF report summarizing the financial anlyses and final recommendation for a given company.
 
 
 ## Financial Assistants
@@ -213,6 +214,6 @@ The core of the agent's response is available in field `data` which contains cal
 
 ### Complete Example
 
-Run script [examples/complete_example.py](examples/complete_example.py) to generate a PDF report with an investment recommendation of the company Apple (AAPL) by an AI financial advisor agent and its financial assistant agents. The report can be downloaded from [reports/investment_report_AAPL_20251228_101309.pdf](reports/investment_report_AAPL_20251228_101309.pdf).
+Run script [examples/complete_example.py](examples/complete_example.py) to generate a PDF report with an investment recommendation of the company Apple (AAPL) by an AI financial advisor agent and its financial assistant agents. The report can be downloaded from [reports/investment_report_AAPL_20251228_101309.pdf](reports/investment_report_AAPL_20251228_101309.pdf). The image below shows the final recommendation summarized in the cover page of the report.
 
-<iframe src="reports/investment_report_AAPL_20251228_101309.pdf" width="100%" height="500px" frameborder="0" />
+![Example of financial report cover page for AAPL](imgs/financial_report_cover.png)

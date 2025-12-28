@@ -23,7 +23,11 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-async def main():
+async def main(
+    task_id="analysis_001",
+    ticker="AAPL",
+    company_name="Apple Inc.",
+):
     """
     Main execution flow for investment analysis.
     """
@@ -103,9 +107,9 @@ async def main():
 
     # Example: Analyze Apple Inc. (AAPL)
     task = AgentTask(
-        task_id="analysis_001",
-        ticker="AAPL",
-        company_name="Apple Inc.",
+        task_id=task_id,
+        ticker=ticker,
+        company_name=company_name,
         user_context={
             "risk_tolerance": "moderate",
             "investment_horizon": "long-term",
@@ -229,7 +233,7 @@ async def main():
         raise
 
 
-def analyze_multiple_companies():
+async def analyze_multiple_companies():
     """
     Example: Batch analysis of multiple companies.
     """
@@ -244,9 +248,10 @@ def analyze_multiple_companies():
 
     logger.info(f"Analyzing {len(companies)} companies...")
 
-    # TODO: Implement batch processing
-    # This would create tasks for each company and process them
-    # either sequentially or in parallel
+    for task_id, (ticker, company_name) in enumerate(companies):
+        await main(
+            task_id=f"analysis_{task_id + 1}", ticker=ticker, company_name=company_name
+        )
 
     pass
 
@@ -266,5 +271,4 @@ if __name__ == "__main__":
     asyncio.run(main())
 
     # Optional: Run additional examples
-    # analyze_multiple_companies()
-    # analyze_with_custom_parameters()
+    # asyncio.run(analyze_multiple_companies())
