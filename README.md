@@ -109,8 +109,6 @@ uv sync
 4. Create file `.env` in top folder and containing the following text
 
 ```
-# Create this file in .env and add your actual API key
-
 # Required: Your Anthropic API key from https://console.anthropic.com/
 ANTHROPIC_API_KEY=sk-ant-api03-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
@@ -118,12 +116,12 @@ ANTHROPIC_API_KEY=sk-ant-api03-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ANTHROPIC_MODEL=claude-sonnet-4-5-20250929
 
 # Optional: Custom skills storage directory (default: ./src/agents/custom_skills)
-SKILLS_STORAGE_PATH=./src/agents/custom_skills
+SKILLS_STORAGE_PATH=./src/skills
 
 # Optional: Output directory for generated files (default: ./outputs)
 OUTPUT_PATH=./outputs
 
-# Massive API key from https://massive.com/ (optional)
+# Optional: Massive API key from https://massive.com/
 MASSIVE_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
