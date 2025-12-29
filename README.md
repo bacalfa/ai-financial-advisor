@@ -26,7 +26,7 @@ AI assistant analyzes income statements, balance sheets, and cash flow statement
 - Agent Skills for retrieving financial data
 - Outputs health scores and trend analysis
 
-For more details on the sill description, see [src/skills/analyzing-financial-statements/SKILL.md](src/skills/analyzing-financial-statements/SKILL.md).
+For more details on the skill description, see [src/skills/analyzing-financial-statements/SKILL.md](src/skills/analyzing-financial-statements/SKILL.md).
 
 
 ### Financial Modeling
@@ -38,7 +38,7 @@ AI assistant builds Discounted Cash Flow (DCF) models, performs comparable compa
 - Sensitivity analysis
 - Agent Skills for Weighted Average Cost of Capital (WACC) calculation, Free Cash Flow (FCF) projections, terminal value
 
-For more details on the sill description, see [src/skills/financial-modeling-valuation/SKILL.md](src/skills/financial-modeling-valuation/SKILL.md).
+For more details on the skill description, see [src/skills/financial-modeling-valuation/SKILL.md](src/skills/financial-modeling-valuation/SKILL.md).
 
 *Note: Automatically list comparable companies using a (free) [Massive](https://massive.com/) API key for stocks. See section [Installation](#installation).*
 
@@ -51,7 +51,7 @@ AI assistant performs technical analysis using pandas_ta_classic library for com
 - Agent Skills for calculating indicators and detecting patterns
 - Outputs trading signals and entry/exit points
 
-For more details on the sill description, see [src/skills/technical-analysis/SKILL.md](src/skills/technical-analysis/SKILL.md).
+For more details on the skill description, see [src/skills/technical-analysis/SKILL.md](src/skills/technical-analysis/SKILL.md).
 
 
 ## Financial Advisor (Orchestrator)
