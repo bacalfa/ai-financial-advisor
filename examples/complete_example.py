@@ -56,7 +56,8 @@ async def main(
 
     # Create skill specifications from skill directories
     skill_specs = get_agent_skill_specs_for_system(
-        client=client, skills_base_path="src/skills"
+        client=client,
+        skills_base_path=os.environ.get("SKILLS_STORAGE_PATH", "src/skills"),
     )
 
     logger.info(f"✓ Loaded {len(skill_specs)} Agent Skills:")
@@ -204,8 +205,10 @@ async def main(
         logger.info("=" * 60)
 
         # Initialize report generator
+        output_base_dir = os.environ.get("OUTPUT_PATH", "outputs")
         report_gen = ReportGenerator(
-            output_dir="outputs/reports", temp_dir="outputs/temp"
+            output_dir=os.path.join(output_base_dir, "reports"),
+            temp_dir=os.path.join(output_base_dir, "temp"),
         )
 
         # Generate report

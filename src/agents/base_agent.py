@@ -7,6 +7,7 @@ that leverage Anthropic's Agent Skills framework.
 
 import json
 import logging
+import os
 import re
 import time
 from abc import ABC, abstractmethod
@@ -99,7 +100,9 @@ class BaseAgent(ABC):
         self.status = AgentStatus.IDLE
 
         # Configuration defaults
-        self.model = self.config.get("model", "claude-sonnet-4-20250514")
+        self.model = self.config.get(
+            "model", os.environ.get("ANTHROPIC_MODEL", "claude-sonnet-4-5-20250929")
+        )
         self.max_tokens = self.config.get("max_tokens", 8192)
         self.temperature = self.config.get("temperature", 0.1)
         self.min_confidence = self.config.get("min_confidence", 0.7)
